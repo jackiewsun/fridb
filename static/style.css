@@ -1,0 +1,187 @@
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+
+td {
+    border: 1px solid black;
+    min-width: 18px;
+    height: 19px;
+    text-align: center;
+    font-size: 12px;
+    padding: 0px;
+}
+
+.tooltip-inner {
+    white-space: pre;
+    font-size: 18px;
+    max-width: none;
+}
+
+p {
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+#core-label{
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg);
+}
+
+#core-label{
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg);
+}
+
+#container {
+  position: absolute;
+  left: 250px;
+}
+#main-header {/*-specifies how the header on the webpage is styled*/
+  text-align: center;
+  background-color: #BF5700;
+  color: white;
+  padding: 30px;
+}
+
+#myChart {/*where the table is positioned and sized on the webpage*/
+  position: absolute;
+  top: 750px;
+  left: 0px;
+  max-width: 1000px;
+  max-height: 600px;
+  border: none;
+}
+
+#all-text {
+  text-align: center;
+}
+
+#boxed {/*specifies styling for the instructions box*/
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 250px;
+  color: #CC5000;
+  background-color: white;
+  border: 2px solid green;
+  padding: 3px;
+}
+
+#dropbtn, #menubtn{/*button for instructions box*/
+  background-color: #BF5700;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+#dropup {/*functionality for instructions box to go down on page*/
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: inline-block;
+}
+
+#menu {/*functionality for instructions box to go down on page*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: inline-block;
+}
+
+#dropup-content {/*styling for text in the instructions box*/
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  background-color: #f1f1f1;
+  min-width: 350px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+#dropup:hover #dropup-content {/*functionality for instructions box to show when the button is hovered over*/
+  display: block;
+}
+
+#dropup:hover #dropbtn {/*changes color of instructions button when hovered over*/
+  background-color: #3e8e41;
+}
+
+#menu:hover #menubtn {
+  background-color: #3e8341;
+}
+
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0px; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #333f48; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    font-size: 36px;
+    margin-left: 180px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+    background-color: #333f48;
+    color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+    display: none;
+    background-color: #333f48;
+    padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+    float: right;
+    padding-right: 8px;
+}

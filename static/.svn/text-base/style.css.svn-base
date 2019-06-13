@@ -1,0 +1,29 @@
+
+table {
+    border-collapse: collapse; 
+    table-layout: fixed;
+}
+
+
+td {
+    border: 1px solid black;
+    min-width: 18px;
+    height: 19px;
+    text-align: center;
+    font-size: 12px;
+    padding: 0px;
+}
+
+.tooltip-inner {
+    white-space: pre;
+    font-size: 18px;
+    max-width: none;
+}
+
+#core-label{
+-webkit-transform: rotate(-90deg);	
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg);
+}

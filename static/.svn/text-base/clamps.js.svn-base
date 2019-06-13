@@ -1,0 +1,5 @@
+var clamps = {
+    "Cohesive Energy": { "min": -1000, "max": 0 },
+    "Binding Energy": { "min": -12, "max": 0 },
+    "Hydrogen Binding Energy": { "min" : -12, "max": 0 }
+}
