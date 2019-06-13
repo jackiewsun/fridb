@@ -65,9 +65,9 @@
 
 const IDEAL_OBE = -1.143;
 const IDEAL_HBE = -0.529;
-parentDropdown
+
 //Creates dropdown elements for each layer of data e.g. 79NP->AAA/BBB->O->Binding Energy
-function makeNewSideDropdown(parentDropdown, dropdownLayers, i = 0){
+function makeNewDropdown(parentDropdown, dropdownLayers, i = 0){
   _.each(dropdownLayers[i], function(dropdownText) {
     //ensuring no repeat graphs
     if (dropdownText == 'ABB' || dropdownText == 'BBB') {
@@ -91,9 +91,9 @@ function makeNewSideDropdown(parentDropdown, dropdownLayers, i = 0){
 
     //continues recursively if there are more layers to add to the menu, or else it adds the final layer which has active links
     if((i + 1) < dropdownLayers.length-1) {
-      makeNewSideDropdown(newDropdownDiv, dropdownLayers, i+1);
+      makeNewDropdown(newDropdownDiv, dropdownLayers, i+1);
     } else {
-      fillInSideDropdown(newDropdownDiv, dropdownLayers[i+1]);
+      fillInDropdown(newDropdownDiv, dropdownLayers[i+1]);
     }
     parentDropdown.appendChild(newDropdownButton);
     parentDropdown.appendChild(newDropdownDiv);
@@ -101,16 +101,16 @@ function makeNewSideDropdown(parentDropdown, dropdownLayers, i = 0){
 }
 
 //adds the final layer for the side dropdown - has active links that change the active data
-function fillInSideDropdown(outer_label, labels){
-  _.each(labels, function(result) {
-    var a_result = document.createElement('a');
-    a_result.textContent = result;
-    a_result.href = '#';
-    a_result.id = outer_label.id + '_' + result;
-    if (a_result.textContent.includes('_')){
-      a_result.textContent = a_result.textContent.replace('_', ' ')
+function fillInDropdown(parentDropdown, clickableText){
+  _.each(clickableText, function(tableType) {
+    var tableLink = document.createElement('a');
+    tableLink.textContent = tableType;
+    tableLink.href = '#';
+    tableLink.id = parentDropdown.id + '_' + tableType;
+    if (tableLink.textContent.includes('_')){
+      tableLink.textContent = tableLink.textContent.replace('_', ' ')
     }
-    outer_label.appendChild(a_result);
+    parentDropdown.appendChild(tableLink);
   });
 }
 
@@ -297,8 +297,8 @@ function make_table(contain) {
     dblock2 = needed_vars[4],//metals for vertical
     tables = needed_vars[5];//the table objects
   dataset1 = [
-    {label: 'Ideal OBE', fill: false, data: [ideal_OBE, ideal_OBE, ideal_OBE, ideal_OBE], type: 'lineError', yAxisID: 'BE'},
-    {label: 'Ideal HBE', fill: false, data: [ideal_HBE, ideal_HBE, ideal_HBE, ideal_HBE], type: 'lineError', yAxisID: 'BE'},
+    {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'},
+    {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'},
     {data: [0,0,0,0], yAxisID: 'Dist'}
   ]; //initial dataset for the graph - 0 line to fix positioning, other 2 for ideal energies
   var ids = ["79_NP", "Slab"];//helps with generating the dropdowns
@@ -308,7 +308,7 @@ function make_table(contain) {
   var for_dropdowns = [siteAs, adsorbate, result_type];
   _.each(ids, function(label) {//loop to create dropdowns
     var structure = document.getElementById(label);
-    makeNewSideDropdown(structure, for_dropdowns);
+    makeNewDropdown(structure, for_dropdowns);
   });
 
   var nuke = document.createElement('button'); //makes clear button
@@ -465,7 +465,7 @@ function make_table(contain) {
             //												td.style.fontSize = "large"
             //												td.textContent = 'X'
           } else if (table['result_type'] == "O Binding Energy") { //creates color gradient for O
-            var target_energy = ideal_OBE;
+            var target_energy = IDEAL_OBE;
               var ideal_activity = -0.134;
               if(val < target_energy) { //overbinding
                 var activity = 0.7642240985316116 + 0.7854675573688066 * val
@@ -500,7 +500,7 @@ function make_table(contain) {
                 td.style.background = sprintf('#FFC4C4')
               }*/
           } else if (table['result_type'] == "H Binding Energy") { //creates color gradient for H
-            var target_energy = ideal_HBE;
+            var target_energy = IDEAL_HBE;
             var dif = Math.abs(target_energy - val);
             if (dif < 0.05) {
               td.style.background = sprintf('#0036B0') //all are shades of blue
@@ -825,13 +825,13 @@ function make_table(contain) {
   OBE.onclick = function() {//adding and removing the OBE line
     try {
       if(dataset1[0]['label'] != 'Ideal OBE') {
-        dataset1.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [ideal_OBE, ideal_OBE, ideal_OBE, ideal_OBE], type: 'lineError', yAxisID: 'BE'});
+        dataset1.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'});
       }
       else {
         dataset1.splice(0, 1);
       }
     } catch {
-      dataset1.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [ideal_OBE, ideal_OBE, ideal_OBE, ideal_OBE], type: 'lineError', yAxisID: 'BE'});
+      dataset1.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'});
     }
     window.myLine.update();
   }
@@ -849,13 +849,13 @@ function make_table(contain) {
         pos = 1;
       }
       if(dataset1[pos]['label'] != 'Ideal HBE') {
-        dataset1.splice(1, 0, {label: 'Ideal HBE', fill: false, data: [ideal_HBE, ideal_HBE, ideal_HBE, ideal_HBE], type: 'lineError', yAxisID: 'BE'});
+        dataset1.splice(1, 0, {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'});
       }
       else {
         dataset1.splice(pos, 1);
       }
     } catch {//if dataset1 is empty
-      dataset1.splice(caught, 0, {label: 'Ideal HBE', fill: false, data: [ideal_HBE, ideal_HBE, ideal_HBE, ideal_HBE], type: 'lineError', yAxisID: 'BE'});
+      dataset1.splice(caught, 0, {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'});
     }
     window.myLine.update();
   }
