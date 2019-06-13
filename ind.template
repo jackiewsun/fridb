@@ -1,7 +1,7 @@
 <!DOCTYPE html >
 <html>
 <head>
-  <title>Random Bimetalic Database</title>
+  <title>Random Bimetallic Database</title>
   <!--functionality and style scripts-->
   <script src='static/jquery.min.js'></script>
   <script src='static/underscore-min.js'></script>
@@ -51,19 +51,24 @@
     <div class = 'dropdown-container' id = 'Slab'>
     </div>
   </div>
+<!--
   <p class = 'home'>NOTE: JavaScript functionality is disabled on Microsoft Edge. Please switch to Google Chrome, Mozilla Firefox, or any other browser that supports JavaScript in order to view the rest of the database. </p>
   <p class = 'home'>It is essential to promote alternative energy sources as our energy demands to increase. Our research aims to improve the viability of hydrogen
 		fuel cells via high-throughput computation of materials candidates for catalysis. We performed density functional theory calculations to optimize randomly-ordered
 		bimetallic 79-atom nanoparticles and slabs. We use the well-defined relation between binding energy of metallic materials to oxygen and hydrogen to their catalytic ability
 		for the oxygen reduction and hydrogen evolution reactions. From there, we can make conclusions about promising catalytic materials from our calculated binding energies
 		reported here.</p>
-		<p class = 'home'>Findings reported here also include the distance the adsorbate moved from the original three-fold hollow site, which when considered in the differences
+	<p class = 'home'>Findings reported here also include the distance the adsorbate moved from the original three-fold hollow site, which when considered in the differences
 		between predicted and observed binding energies, can explain deviations from our predictions. A useful tool in this database is the 'Graph' functionality, which allows
 		plotting of binding energies and/or adsorbate movement distances across the four site compositions for a particular alloy. This can then be used, for example, to observe
 		whether one of our materials is tunable and, if not, what sites correlated to adsorbate movement.</p>
+-->
 </body>
-<script>
 
+<script type="text/javascript">
+$(document).ready(function(e) {
+    $('#header').load('home.html',function(){alert('loaded')});
+});
 const IDEAL_OBE = -1.143;
 const IDEAL_HBE = -0.529;
 
