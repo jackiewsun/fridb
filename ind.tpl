@@ -62,38 +62,41 @@
 		whether one of our materials is tunable and, if not, what sites correlated to adsorbate movement.</p>
 </body>
 <script>
-var ideal_OBE = -1.143;
-var ideal_HBE = -0.529;
+
+const IDEAL_OBE = -1.143;
+const IDEAL_HBE = -0.529;
+parentDropdown
 //Creates dropdown elements for each layer of data e.g. 79NP->AAA/BBB->O->Binding Energy
-function makeNewSideDropdown(initial_label, for_dropdowns, i = 0){
-  _.each(for_dropdowns[i], function(label) {
+function makeNewSideDropdown(parentDropdown, dropdownLayers, i = 0){
+  _.each(dropdownLayers[i], function(dropdownText) {
     //ensuring no repeat graphs
-    if (label == 'ABB' || label == 'BBB') {
+    if (dropdownText == 'ABB' || dropdownText == 'BBB') {
       return false;
     }
+
     //all elements necessary for the HTML
-    var new_dropdown_button = document.createElement('button');
-    new_dropdown_button.className = 'dropdown-btn';
-    var new_dropdown_div = document.createElement('div');
-    new_dropdown_div.className = 'dropdown-container';
-    new_dropdown_div.id = initial_label.id + '_' + label;
-    if (label == 'AAA') {
-      label = 'AAA/BBB'
-    } else if (label == 'AAB') {
-      label = 'AAB/ABB'
-    }
-    new_dropdown_button.textContent = label;
-    var i_element = document.createElement('i');
-    i_element.className = 'fa fa-caret-down';
-    new_dropdown_button.appendChild(i_element);
+    var newDropdownButton = document.createElement('button');
+    newDropdownButton.className = 'dropdown-btn';
+    var newDropdownDiv = document.createElement('div');
+    newDropdownDiv.className = 'dropdown-container';
+    newDropdownDiv.id = parentDropdown.id + '_' + dropdownText;
+
+    //merges AAA/BBB and AAB/ABB in the dropdown
+    dropdownText = dropdownText == 'AAA' ? 'AAA/BBB' : (dropdownText == 'AAB' ? 'AAB/ABB' : dropdownText)
+
+    newDropdownButton.textContent = dropdownText;
+    var iElement = document.createElement('i');
+    iElement.className = 'fa fa-caret-down';
+    newDropdownButton.appendChild(iElement);
+
     //continues recursively if there are more layers to add to the menu, or else it adds the final layer which has active links
-    if((i + 1) < for_dropdowns.length-1) {
-      makeNewSideDropdown(new_dropdown_div, for_dropdowns, i+1);
+    if((i + 1) < dropdownLayers.length-1) {
+      makeNewSideDropdown(newDropdownDiv, dropdownLayers, i+1);
     } else {
-      fillInSideDropdown(new_dropdown_div, for_dropdowns[i+1]);
+      fillInSideDropdown(newDropdownDiv, dropdownLayers[i+1]);
     }
-    initial_label.appendChild(new_dropdown_button);
-    initial_label.appendChild(new_dropdown_div);
+    parentDropdown.appendChild(newDropdownButton);
+    parentDropdown.appendChild(newDropdownDiv);
   });
 }
 
