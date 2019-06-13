@@ -1,0 +1,69 @@
+{
+  type: 'bar',
+  data: {
+    labels: ["AAA", "AAB", "ABB", "BBB"],
+    datasets: graphData
+  },
+  options: {
+    responsive: true,
+    legend: {
+      display: true,
+      position: "bottom",
+      fontSize: 16
+    },
+    scales: {
+      xAxes: [{
+        stacked: false, //false to put bars adjacent
+        type: 'category',
+        display: true,
+        barThickness: 33,
+        ticks: {
+          fontSize: 16
+        },
+        position: 'bottom',
+        scaleLabel: {
+          display: true,
+          labelString: 'Binding Site',
+          fontSize: 25
+        }
+      }, {
+        stacked: false,
+        type: 'category',
+        display: false,
+        position: 'bottom'
+      }],
+      yAxes: [{
+        id: 'BE',
+        type: 'linear',
+        display: true,
+        ticks: {
+          fontSize: 16
+        },
+        scaleLabel: {
+          id: 'BE',
+          display: true,
+          labelString: 'Binding Energy (eV)',
+          fontSize: 25
+        }
+      }, {
+        id: 'Dist',
+        stacked: false,
+        type: 'linear',
+        position: 'right',
+        display: true,
+        gridLines: {
+          display: false
+        },
+        ticks: {
+          fontSize: 16
+        },
+        scaleLabel: {
+          id: 'Dist',
+          display: true,
+          labelString: 'Distance Moved (Angstroms)',
+          fontSize: 25
+        }
+      }]
+    }
+  }
+}

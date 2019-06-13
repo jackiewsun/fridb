@@ -8,7 +8,9 @@ def index():
         data = ''.join(f.readlines())
     with open('home.html', 'r') as f:
         text = ''.join(f.readlines())
-    return template.render(text = text, data = data)
+    with open('graphing.html', 'r') as f:
+        config = ''.join(f.readlines())
+    return template.render(text = text, data = data, config = config)
 
 @route('/static/<filename>')
 def server_static(filename):

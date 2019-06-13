@@ -20,9 +20,7 @@
 </body>
 
 <script type="text/javascript">
-$(document).ready(function(e) {
-    $('#header').load('home.html',function(){alert('loaded')});
-});
+
 const IDEAL_OBE = -1.143;
 const IDEAL_HBE = -0.529;
 
@@ -109,9 +107,10 @@ function fillTables(contain) {
       SiteA = 'AAA';
     }
 
-    /**********
-    NEED TO DISTINGUISH BETWEEN TABLES AND TABLE. TABLES IS THE COLLECTION OF TABLE OBJECTS.
-    ************/
+    /**
+    * NEED TO DISTINGUISH BETWEEN TABLES AND TABLE. TABLES IS THE COLLECTION OF TABLE OBJECTS.
+    * TABLES ARE STILL BEING UNNECCESSARILY FILLED I.E. ABB AND BBB
+    */
 
     function addTableObject(tableTitle, tableTitle2, table_type) {
       if (!_.has(tables, tableTitle)) {//appends the tables if it isn't already a part of the tables object
@@ -148,8 +147,10 @@ function fillTables(contain) {
       var key2 = makeKeys(2, 1)
       var key3 = makeKeys(3, 0)
       var key4 = makeKeys('None', 'None')
-      if ((key0 in data) && (key1 in data) && (key2 in data) && (key3 in data) || (key4 in data)) { //if all the data is present, the graph will be created (ensuring no missing data point)
-        tableTitle = sprintf('%s Graph %s', structureType, result_type);//this entire thing is the same as before except it's a graph
+
+      //if all the data is present, the graph will be created (ensuring no missing data point)
+      if ((key0 in data) && (key1 in data) && (key2 in data) && (key3 in data) || (key4 in data)) {
+        tableTitle = sprintf('%s Graph %s', structureType, result_type);
         tableTitle_Dist = sprintf('%s Graph %s', structureType, split[5] + ' Distance Moved');//can really be simplified with another function probably
         if (!_.has(tables, tableTitle)) {//if the graph doesn't already exist as an object
           //adds a table element for BE
@@ -257,75 +258,8 @@ function makeTable(contain) {
 
   tableContainers = {};
   var ctx = document.getElementById("myChart").getContext('2d');
-  var config = { //clean up using CSS //all of these are settings for the graph (60+lines)
-    type: 'bar',
-    data: {
-      labels: ["AAA", "AAB", "ABB", "BBB"],
-      datasets: graphData
-    },
-    options: {
-      responsive: true,
-      legend: {
-        display: true,
-        position: "bottom",
-        fontSize: 16
-      },
-      scales: {
-        xAxes: [{
-          stacked: false, //false to put bars adjacent
-          type: 'category',
-          display: true,
-          barThickness: 33,
-          ticks: {
-            fontSize: 16
-          },
-          position: 'bottom',
-          scaleLabel: {
-            display: true,
-            labelString: 'Binding Site',
-            fontSize: 25
-          }
-        }, {
-          stacked: false,
-          type: 'category',
-          display: false,
-          position: 'bottom'
-        }],
-        yAxes: [{
-          id: 'BE',
-          type: 'linear',
-          display: true,
-          ticks: {
-            fontSize: 16
-          },
-          scaleLabel: {
-            id: 'BE',
-            display: true,
-            labelString: 'Binding Energy (eV)',
-            fontSize: 25
-          }
-        }, {
-          id: 'Dist',
-          stacked: false,
-          type: 'linear',
-          position: 'right',
-          display: true,
-          gridLines: {
-            display: false
-          },
-          ticks: {
-            fontSize: 16
-          },
-          scaleLabel: {
-            id: 'Dist',
-            display: true,
-            labelString: 'Distance Moved (Angstroms)',
-            fontSize: 25
-          }
-        }]
-      }
-    }
-  };
+  var config = {{!config}}
+
   Chart.defaults.global.defaultFontColor = "black"; //fontcolor, changes all
   window.onload = function() {//when the page loads, create this chart object in the canvas
     window.myLine = new Chart(ctx, config);
@@ -718,13 +652,11 @@ function makeTable(contain) {
       div.style.display = 'none';
     });
   }
+
   hideAllTables();
   $(".container").hide();
 
   showTable = title => tableContainers[title].style.display = "block";
-  /*function showTable(title) {//for a chosen table, display to the page
-    tableContainers[title].style.display = "block";
-  }*/
 
   jQuery(".sidenav a").click(function() {
     //functionality of dropdown menu
@@ -732,14 +664,12 @@ function makeTable(contain) {
     if (contentPanelId == "home") {
       hideAllTables();
       $(".container").hide();
-      //$(".btn btn-default").hide();
       $(".home").show();
     }
     else if (contentPanelId != 'closebtn' && contentPanelId != undefined) {//otherwise, hide away whatever is on the page now and display the chosen table
       hideAllTables();
       showTable(contentPanelId);
       $(".container").show();
-      //$(".btn btn-default").show();
       $(".home").hide();
     }
   });
