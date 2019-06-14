@@ -75,9 +75,15 @@ def insert():
 
 @b.get('/')
 def index():
-    template = b.SimpleTemplate('\n'.join(open('ind.template2', 'r').readlines()))
-    data = ''.join(open('allresults_new.json', 'r').readlines())
-    return template.render(data = data)
+    with open('ind.template', 'r') as f:
+        template = SimpleTemplate('\n'.join(f.readlines()))
+    with open('allresults_new.json', 'r') as f:
+        data = ''.join(f.readlines())
+    with open('home.html', 'r') as f:
+        text = ''.join(f.readlines())
+    with open('graphing.html', 'r') as f:
+        config = ''.join(f.readlines())
+    return template.render(text = text, data = data, config = config)
 
 
 @b.post('/checkcode')
