@@ -42,7 +42,7 @@ transform: rotate(-90deg);
 
 #container {
   position: absolute;
-  left: 250px;
+  left: 275px;
 }
 #main-header {/*-specifies how the header on the webpage is styled*/
   text-align: center;
