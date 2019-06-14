@@ -26,7 +26,7 @@ const IDEAL_OBE = -1.143;
 const IDEAL_HBE = -0.529;
 
 //Creates dropdown elements for each layer of data e.g. 79NP->AAA/BBB->O->Binding Energy
-function makeNewDropdown(parentDropdown, dropdownLayers, i = 0){
+function makeNewDropdown(parentDropdown, dropdownLayers, i = 0) {
   _.each(dropdownLayers[i], function(dropdownText) {
     //ensuring no repeat graphs
     if (dropdownText == 'ABB' || dropdownText == 'BBB') {
@@ -49,10 +49,10 @@ function makeNewDropdown(parentDropdown, dropdownLayers, i = 0){
     newDropdownButton.appendChild(caret);
 
     //continues recursively if there are more layers to add to the menu, or else it adds the final layer which has active links
-    if((i + 1) < dropdownLayers.length-1) {
-      makeNewDropdown(newDropdownDiv, dropdownLayers, i+1);
+    if ((i + 1) < dropdownLayers.length - 1) {
+      makeNewDropdown(newDropdownDiv, dropdownLayers, i + 1);
     } else {
-      fillInDropdown(newDropdownDiv, dropdownLayers[i+1]);
+      fillInDropdown(newDropdownDiv, dropdownLayers[i + 1]);
     }
     parentDropdown.appendChild(newDropdownButton);
     parentDropdown.appendChild(newDropdownDiv);
@@ -60,13 +60,13 @@ function makeNewDropdown(parentDropdown, dropdownLayers, i = 0){
 }
 
 //adds the final layer for the side dropdown - has active links that change the active data
-function fillInDropdown(parentDropdown, clickableText){
+function fillInDropdown(parentDropdown, clickableText) {
   _.each(clickableText, function(tableType) {
     var tableLink = document.createElement('a');
     tableLink.textContent = tableType;
     tableLink.href = '#';
     tableLink.id = parentDropdown.id + '_' + tableType;
-    if (tableLink.textContent.includes('_')){
+    if (tableLink.textContent.includes('_')) {
       tableLink.textContent = tableLink.textContent.replace('_', ' ')
     }
     parentDropdown.appendChild(tableLink);
@@ -108,13 +108,29 @@ function fillTables(contain) {
     }
 
     function addTableObject(tableTitle, tableTitle2, tableType) {
-      if (!_.has(tables, tableTitle)) {//appends the tables if it isn't already a part of the tables object
-        tables[tableTitle] = {max: -1e300, min: 1e300, Site: siteA, resultType:tableType, cells: {'webpage':'colored'}};
-        tables[tableTitle2] = {max: -1e300, min: 1e300, Site: siteA2, resultType:tableType, cells: {'webpage':'colored'}};
+      if (!_.has(tables, tableTitle)) { //appends the tables if it isn't already a part of the tables object
+        tables[tableTitle] = {
+          max: -1e300,
+          min: 1e300,
+          Site: siteA,
+          resultType: tableType,
+          cells: {
+            'webpage': 'colored'
+          }
+        };
+        tables[tableTitle2] = {
+          max: -1e300,
+          min: 1e300,
+          Site: siteA2,
+          resultType: tableType,
+          cells: {
+            'webpage': 'colored'
+          }
+        };
       }
     }
 
-    function addTableData(site, tableTitleBE, tableTitleDist, arg){//value arg is to see if it is title or title2
+    function addTableData(site, tableTitleBE, tableTitleDist, arg) { //value arg is to see if it is title or title2
       var cellKey = arg == 0 ? sprintf('%s,%s', m1, m2) : sprintf('%s,%s', m2, m1);
       tables[tableTitleBE]['cells'][cellKey] = {};
       tables[tableTitleDist]['cells'][cellKey] = {};
@@ -123,7 +139,7 @@ function fillTables(contain) {
 
       //this entire chunk of code is inserting data into cells
       tables[tableTitleBE]['cells'][cellKey]['value'] = bindingEnergy;
-      tables[tableTitleDist]['cells'][cellKey]['value'] = dist;//distance value for each cell
+      tables[tableTitleDist]['cells'][cellKey]['value'] = dist; //distance value for each cell
       tables[tableTitleBE]['cells'][cellKey]['metadata'] = value['metadata'];
       tables[tableTitleBE]['cells'][cellKey]['predicted_BE'] = parseFloat(value['predicted_BE']) || null;
       tables[tableTitleBE]['cells'][cellKey]['deform'] = deformed;
@@ -132,12 +148,12 @@ function fillTables(contain) {
       tables[tableTitleDist]['cells'][cellKey]['neighbor_identity'] = value['neighbor_identity'];
       tables[tableTitleDist]['cells'][cellKey]['deform'] = deformed;
 
-      tables[tableTitleBE]['max'] = Math.max(bindingEnergy, tables[tableTitleBE]['max']);//identifies the maxes and mins of the table values
-      tables[tableTitleBE]['min'] = Math.min(bindingEnergy, tables[tableTitleBE]['min']);//what do max and min really do? are they needed?
+      tables[tableTitleBE]['max'] = Math.max(bindingEnergy, tables[tableTitleBE]['max']); //identifies the maxes and mins of the table values
+      tables[tableTitleBE]['min'] = Math.min(bindingEnergy, tables[tableTitleBE]['min']); //what do max and min really do? are they needed?
 
       //text content of the keys for each input in allresults
       makeKeys = (m1Count, m2Count) => (split[0] + '/' + split[1] + '/' + String(m1Count) + '/' + split[3] + '/' + String(m2Count) + '/' + split[5])
-      var key0 = makeKeys(0, 3)//making keys
+      var key0 = makeKeys(0, 3) //making keys
       var key1 = makeKeys(1, 2)
       var key2 = makeKeys(2, 1)
       var key3 = makeKeys(3, 0)
@@ -150,11 +166,25 @@ function fillTables(contain) {
 
         //if the graph doesn't already exist as an object
         if (!_.has(tables, tableTitle)) {
-          tables[tableTitle] = {max: -1e300, min: 1e300, resultType: resultType, cells: {'webpage': 'graph'}};
+          tables[tableTitle] = {
+            max: -1e300,
+            min: 1e300,
+            resultType: resultType,
+            cells: {
+              'webpage': 'graph'
+            }
+          };
         }
         if (!_.has(tables, tableTitleDist)) {
           //adds a table element for dist.
-          tables[tableTitleDist] = {max: -1e300, min: 1e300, resultType: split[5] + ' Distance Moved', cells: {'webpage': 'graph'}};
+          tables[tableTitleDist] = {
+            max: -1e300,
+            min: 1e300,
+            resultType: split[5] + ' Distance Moved',
+            cells: {
+              'webpage': 'graph'
+            }
+          };
         }
 
         //if the key doesn't exist, make it a null object so that the table will still be made
@@ -166,7 +196,7 @@ function fillTables(contain) {
           tables[tableTitleDist]['cells'][cellKey] = {};
         }
 
-        var bindingEnergy = parseFloat(value['result']);//same thing - adding data to the table
+        var bindingEnergy = parseFloat(value['result']); //same thing - adding data to the table
         var std = parseFloat(value['std']);
         var diststd = parseFloat(value['std distance']);
         tables[tableTitle]['cells'][cellKey][site] = {}; //clean up with looping. same thing as before where we're adding data into the graph
@@ -182,71 +212,74 @@ function fillTables(contain) {
       }
     }
 
+    tableTitleBE = sprintf('%s %s %s', structureType, siteA, resultType); //sprintf is like printf, returning a string based on the values given
+    tableTitleBE2 = sprintf('%s %s %s', structureType, siteA2, resultType) //these ones are simply generating table titles
+    tableTitleDist = sprintf('%s %s %s', structureType, siteA, split[5] + ' Distance Moved'); //table is for AAA and BBB
+    tableTitleDist2 = sprintf('%s %s %s', structureType, siteA2, split[5] + ' Distance Moved'); //table2 is for AAB and ABB
+    addTableObject(tableTitleBE, tableTitleBE2, resultType); //adds a table object to the group of existing tables
+    addTableObject(tableTitleDist, tableTitleDist2, split[5] + ' Distance Moved');
+    addTableData(siteA, tableTitleBE, tableTitleDist, 0); //BBB
+    addTableData(siteA2, tableTitleBE2, tableTitleDist2, 1); //AAA
+    if (key.includes('None')) {
+      siteA2 = 'ABB';
+      siteA = 'AAB';
       tableTitleBE = sprintf('%s %s %s', structureType, siteA, resultType); //sprintf is like printf, returning a string based on the values given
       tableTitleBE2 = sprintf('%s %s %s', structureType, siteA2, resultType) //these ones are simply generating table titles
       tableTitleDist = sprintf('%s %s %s', structureType, siteA, split[5] + ' Distance Moved'); //table is for AAA and BBB
       tableTitleDist2 = sprintf('%s %s %s', structureType, siteA2, split[5] + ' Distance Moved'); //table2 is for AAB and ABB
-      addTableObject(tableTitleBE, tableTitleBE2, resultType);//adds a table object to the group of existing tables
+      addTableObject(tableTitleBE, tableTitleBE2, resultType); //adds a table object to the group of existing tables
       addTableObject(tableTitleDist, tableTitleDist2, split[5] + ' Distance Moved');
-      addTableData(siteA, tableTitleBE, tableTitleDist, 0);//BBB
-      addTableData(siteA2, tableTitleBE2, tableTitleDist2, 1);//AAA
-      if (key.includes('None')) {
-        siteA2 = 'ABB';
-        siteA = 'AAB';
-        tableTitleBE = sprintf('%s %s %s', structureType, siteA, resultType); //sprintf is like printf, returning a string based on the values given
-        tableTitleBE2 = sprintf('%s %s %s', structureType, siteA2, resultType) //these ones are simply generating table titles
-        tableTitleDist = sprintf('%s %s %s', structureType, siteA, split[5] + ' Distance Moved'); //table is for AAA and BBB
-        tableTitleDist2 = sprintf('%s %s %s', structureType, siteA2, split[5] + ' Distance Moved'); //table2 is for AAB and ABB
-        addTableObject(tableTitleBE, tableTitleBE2, resultType);//adds a table object to the group of existing tables
-        addTableObject(tableTitleDist, tableTitleDist2, split[5] + ' Distance Moved');
-        addTableData(siteA, tableTitleBE, tableTitleDist, 0);//AAB
-        addTableData(siteA2, tableTitleBE2, tableTitleDist2, 1);//ABB
-      }
+      addTableData(siteA, tableTitleBE, tableTitleDist, 0); //AAB
+      addTableData(siteA2, tableTitleBE2, tableTitleDist2, 1); //ABB
+    }
   });
-  return [container, metalsHoriz, metalsVert, tables];//the result of fillTables is an array
+  return [container, metalsHoriz, metalsVert, tables]; //the result of fillTables is an array
 }
 
 function makeTable(contain) {
   var [container, metalsHoriz, metalsVert, tables] = fillTables(contain); //calls the function fillTables to gather the necessary data
-  var color_array = {};//empty color object
-  graphData = [
-    {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'},
-    {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'},
-    {data: [0,0,0,0], yAxisID: 'Dist'}
+  var color_array = {}; //empty color object
+  graphData = [{
+      label: 'Ideal OBE',
+      fill: false,
+      data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE],
+      type: 'lineError',
+      yAxisID: 'BE'
+    },
+    {
+      label: 'Ideal HBE',
+      fill: false,
+      data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE],
+      type: 'lineError',
+      yAxisID: 'BE'
+    },
+    {
+      data: [0, 0, 0, 0],
+      yAxisID: 'Dist'
+    }
   ]; //initial dataset for the graph - 0 line to fix positioning, other 2 for ideal energies
-  var ids = ["79_NP", "Slab"];//helps with generating the dropdowns
+  var ids = ["79_NP", "Slab"]; //helps with generating the dropdowns
   var siteAs = ['AAA', 'AAB', 'ABB', 'BBB', 'Graph'];
   var adsorbate = ["O", "H"];
   var resultType = ["Binding_Energy", "Distance_Moved"];
   var dropdownLayers = [siteAs, adsorbate, resultType];
-  _.each(ids, function(structureTypeDropdown) {//loop to create dropdowns
+  _.each(ids, function(structureTypeDropdown) { //loop to create dropdowns
     var structure = document.getElementById(structureTypeDropdown);
     makeNewDropdown(structure, dropdownLayers);
   });
 
-  var clearGraph = document.createElement('button'); //makes clear button
-  clearGraph.textContent = "clear";
-  clearGraph.className = "btn btn-default";
-  container.appendChild(clearGraph);
-
-  var OBE = document.createElement('button');//ideal OBE
-  OBE.textContent = "ideal OBE";
-  OBE.className = "btn btn-default";
-  container.appendChild(OBE);
-
-  var HBE = document.createElement('button');//ideal OBE
-  HBE.textContent = "ideal HBE";
-  HBE.className = "btn btn-default";
-  container.appendChild(HBE);
+  var clearGraph = document.getElementById("clear");
+  var OBE = document.getElementById("OBE");
+  var HBE = document.getElementById("HBE");
 
   tableContainers = {};
   var ctx = document.getElementById("myChart").getContext('2d');
   var config = {{!config}};
 
   Chart.defaults.global.defaultFontColor = "black"; //fontcolor, changes all
-  window.onload = function() {//when the page loads, create this chart object in the canvas
+  window.onload = function() { //when the page loads, create this chart object in the canvas
     window.myLine = new Chart(ctx, config);
-    graphData.splice(2,1);//remove the 0 bar that was just there to fix spacing
+    graphData.splice(2, 1); //remove the 0 bar that was just there to fix spacing
     window.myLine.update();
   }
   _.each(tables, function(table, title) { //loops through each table in tables, utilizing their contents and title
@@ -257,7 +290,7 @@ function makeTable(contain) {
     tableContainers[titleSplit] = tableContainer; //creates HTML element for table
     tableContainer.id = titleSplit; //gives element unique id for differentiation
     container.appendChild(tableContainer); //puts table into document container
-    var heading = document.createElement('h3');//heading element (h# is importance)
+    var heading = document.createElement('h3'); //heading element (h# is important)
     tableContainer.appendChild(heading);
     title = title.includes('AAA') ? title.replace('AAA', 'AAA/BBB') : ((title.includes('AAB') ? title.replace('AAB', 'AAB/ABB') : title))
 
@@ -266,14 +299,14 @@ function makeTable(contain) {
     heading.style.fontSize = "xx-large"
     var tableElement = document.createElement('table');
     tableContainer.appendChild(tableElement);
-    var coreLabelled = false;//is the core (Metal B) created?
-    var keyLabelled = false;//is the key (color gradient) created?
+    var coreLabelled = false; //is the core (Metal B) created?
+    var keyLabelled = false; //is the key (color gradient) created?
 
-    _.each(metalsVert, function(m2) {//for each m2 in the vertical
-      var tr = document.createElement('tr');//adds a row
+    _.each(metalsVert, function(m2) { //for each m2 in the vertical
+      var tr = document.createElement('tr'); //adds a row
       tableElement.appendChild(tr);
 
-      if (!coreLabelled) {//labels the core if it isn't already labeled
+      if (!coreLabelled) { //labels the core if it isn't already labeled
         var td = document.createElement('td');
         td.rowSpan = metalsVert.length + 1;
         td.style.border = "none";
@@ -284,18 +317,18 @@ function makeTable(contain) {
         coreLabelled = true;
       }
 
-      var td = document.createElement('td');//create a table cell for the y-axis labels
+      var td = document.createElement('td'); //create a table cell for the y-axis labels
       td.textContent = m2; //labels with a B metal
       td.style.fontSize = "large";
       //td.style.fontFamily = 'lucida console'
-      tr.appendChild(td);//adds a cell
-      td.style.width = "50px";//styling
+      tr.appendChild(td); //adds a cell
+      td.style.width = "50px"; //styling
       tr.style.height = '50px';
 
-      _.each(metalsHoriz, function(m1) {//for each m1 in the horizontal
-        var td = document.createElement('td');//create a cell for the data
-        cellKey = sprintf('%s,%s', m1, m2);//names the cell for the proper data
-        if (_.has(table['cells'], cellKey)) {//if the cell's data exists, add data
+      _.each(metalsHoriz, function(m1) { //for each m1 in the horizontal
+        var td = document.createElement('td'); //create a cell for the data
+        cellKey = sprintf('%s,%s', m1, m2); //names the cell for the proper data
+        if (_.has(table['cells'], cellKey)) { //if the cell's data exists, add data
           var bindingEnergy = table['cells'][cellKey]['value'];
 
           if (table['cells'][cellKey]['deform'] == 'deformed') {
@@ -304,19 +337,19 @@ function makeTable(contain) {
             //												td.textContent = 'X'
           } else if (table['resultType'] == "O Binding Energy") { //creates color gradient for O
             var targetEnergy = IDEAL_OBE;
-              var ideal_activity = -0.134;
+            var ideal_activity = -0.134;
 
-              if(bindingEnergy < targetEnergy) { //overbinding
-                var activity = 0.7642240985316116 + 0.7854675573688066 * bindingEnergy
-                table['cells'][cellKey]['value'] = activity
-                var activityRatio = activity / (-2)
-                td.style.background = sprintf('rgb(0,' + String(91 + Math.min(Math.floor(activityRatio * (247 - 91)), 247 - 91)) + ',0)')
-              } else { //underbinding
-                var activity = -3.001067465601418 - 2.507767421216152 * bindingEnergy
-                table['cells'][cellKey]['value'] = activity
-                var activityRatio = activity / (-2)
-                td.style.background = sprintf('rgb(255,' + String(57 + Math.min(Math.floor(activityRatio * (183 - 57)), 183 - 57)) + ',0)')
-              }
+            if (bindingEnergy < targetEnergy) { //overbinding
+              var activity = 0.7642240985316116 + 0.7854675573688066 * bindingEnergy
+              table['cells'][cellKey]['value'] = activity
+              var activityRatio = activity / (-2)
+              td.style.background = sprintf('rgb(0,' + String(91 + Math.min(Math.floor(activityRatio * (247 - 91)), 247 - 91)) + ',0)')
+            } else { //underbinding
+              var activity = -3.001067465601418 - 2.507767421216152 * bindingEnergy
+              table['cells'][cellKey]['value'] = activity
+              var activityRatio = activity / (-2)
+              td.style.background = sprintf('rgb(255,' + String(57 + Math.min(Math.floor(activityRatio * (183 - 57)), 183 - 57)) + ',0)')
+            }
 
           } else if (table['resultType'] == "H Binding Energy") { //creates color gradient for H
             var targetEnergy = IDEAL_HBE;
@@ -342,12 +375,12 @@ function makeTable(contain) {
             }
           } else if (table['resultType'].includes("Distance")) { //creates color gradient for H
             var dist = table['cells'][cellKey]['value']
-            var ratioHollow = dist / (0.4)//creates values to use for determing the binding energy color gradient
+            var ratioHollow = dist / (0.4) //creates values to use for determing the binding energy color gradient
             var ratioBridge = dist / (1 - 0.4)
             var ratioTop = dist / (1.5 - 1)
             var neighbors = table['cells'][cellKey]['Neighbors'];
 
-            if (neighbors == 1) {//creating the color gradient based on which site the adsorbate is binded to
+            if (neighbors == 1) { //creating the color gradient based on which site the adsorbate is binded to
               td.style.background = sprintf('rgb(0,' + String(91 + Math.min(Math.floor(ratioTop * (247 - 91)), 247 - 91)) + ',0)')
             } else if (neighbors == 2) {
               td.style.background = sprintf('rgb(99,50,' + String(83 + Math.min(Math.floor(ratioBridge * (208 - 83), 208 - 83))) + ')') //why the numbers??
@@ -355,7 +388,7 @@ function makeTable(contain) {
               td.style.background = sprintf('rgb(255,' + String(57 + Math.min(Math.floor(ratioHollow * (183 - 57)), 183 - 57)) + ',0)')
             }
           }
-          if (table['cells']['webpage'] == 'colored') {//if the data exists, create data
+          if (table['cells']['webpage'] == 'colored') { //if the data exists, create data
             div = document.createElement('div');
             div.title = sprintf('Alloy: %s%s\n', m1, m2)
 
@@ -364,11 +397,11 @@ function makeTable(contain) {
             div.title += 'On Site: ' + onSite.join('') + '\n'
 
             //noting (if changed sites) where the site change is
-            if(titleSplit.split('_').indexOf("Distance") > -1){
+            if (titleSplit.split('_').indexOf("Distance") > -1) {
 
               var neighborIdentities = table['cells'][cellKey]['neighbor_identity']; //cellKey reference is wrong?
               var neighborIdentitiesArray = {};
-              _.each(neighborIdentities, function(site){
+              _.each(neighborIdentities, function(site) {
                 var siteKey = site.sort().join('');
                 try {
                   neighborIdentitiesArray[siteKey][0]++;
@@ -377,14 +410,14 @@ function makeTable(contain) {
                 }
               });
               delete neighborIdentitiesArray[onSite.sort().join('')];
-              _.each(neighborIdentitiesArray, function(site){
+              _.each(neighborIdentitiesArray, function(site) {
                 div.title += sprintf('Moved to Site %s %s times\n', site[1], site[0])
               })
             }
 
-            if (table['cells'][cellKey]['deform'] == 'deformed') {//if deformed, add data to the tooltip
+            if (table['cells'][cellKey]['deform'] == 'deformed') { //if deformed, add data to the tooltip
               div.title += sprintf('Significantly deformed upon adsorption.')
-            } else {//if it isn't deformed, add the data to the tooltip
+            } else { //if it isn't deformed, add the data to the tooltip
               if (titleSplit.split('_').indexOf("Distance") == -1) {
                 div.title += 'Activity: ' + table['cells'][cellKey]['value'].toFixed(4) + '\n';
                 div.title += 'Predicted Binding Energy: ' + table['cells'][cellKey]['predicted_BE'] + '\n';
@@ -395,13 +428,13 @@ function makeTable(contain) {
             div.style.width = '100%';
             div.style.height = '100%';
             div.style.opacity = "1";
-            $(div).tooltip();//makes the popup part of the datasets
+            $(div).tooltip(); //makes the popup part of the datasets
             td.appendChild(div);
 
           } else {
-            if (table['cells'][cellKey]['deform'] == 'deformed') {//makes the deformed ones black
+            if (table['cells'][cellKey]['deform'] == 'deformed') { //makes the deformed ones black
               td.style.background = sprintf('#000000')
-            } else {//creates a clickable button to create a graph
+            } else { //creates a clickable button to create a graph
               changeGraphButton = document.createElement('button');
               td.style.background = sprintf('rgb(230,230,210)');
               td.className = "clickFalse"; //indicates if the button is toggled or not
@@ -413,13 +446,13 @@ function makeTable(contain) {
               function addGraph() { //add dataset to graphData
                 cellKey = sprintf('%s,%s', m1, m2);
                 var inColor = false;
-                var hue = 'rgb(' + (Math.floor(Math.random() * 200)) + ',' + (Math.floor(Math.random() * 200)) + ',' + (Math.floor(Math.random() * 200)) + ')';//random color
-                var leng = graphData.length//ensures it is appended at end of graphData
+                var hue = 'rgb(' + (Math.floor(Math.random() * 200)) + ',' + (Math.floor(Math.random() * 200)) + ',' + (Math.floor(Math.random() * 200)) + ')'; //random color
+                var leng = graphData.length //ensures it is appended at end of graphData
                 var key = cellKey + title.replace(table['resultType'], '')
                 for (var entry in color_array) {
                   if (entry.includes(key)) { // if same alloy in same order, uses same color for plotting line & bar
-                    hue = color_array[entry];//if the alloy already exists, set the color to be what it is for line/bar
-                    inColor = true;//exists!
+                    hue = color_array[entry]; //if the alloy already exists, set the color to be what it is for line/bar
+                    inColor = true; //exists!
                     break;
                   }
                 };
@@ -428,13 +461,13 @@ function makeTable(contain) {
                   hue = hue.replace(')', ',0.5)') // makes bars transparent
                   hue = hue.replace('rgb', 'rgba')
                 }
-                if (hue.includes('rgbaa')) {//fix a small error
+                if (hue.includes('rgbaa')) { //fix a small error
                   hue = hue.replace('rgbaa', 'rgba')
                   hue = hue.replace(',0.5)', ')')
                 }
-                if (!inColor) {//if it doesn't exist already in the dataset, add it
+                if (!inColor) { //if it doesn't exist already in the dataset, add it
                   color_array[key + String(leng)] = hue;
-                } else {//if it does exist, adjust it to be the same as before
+                } else { //if it does exist, adjust it to be the same as before
                   if (hue.includes('rgba') && table['resultType'].includes('Binding')) {
                     hue = hue.replace(',0.5)', ')'); // makes bars transparent
                     hue = hue.replace('rgba', 'rgb');
@@ -443,7 +476,7 @@ function makeTable(contain) {
                   color_array[key + String(leng)] = hue;
                 }
                 td.style.background = sprintf(hue);
-                if (table['resultType'].includes('Binding')) {//determining if it's line or bar graph
+                if (table['resultType'].includes('Binding')) { //determining if it's line or bar graph
                   var graphType = 'lineError'
                   var axisID = 'BE'
                   var error = 'std'
@@ -455,7 +488,7 @@ function makeTable(contain) {
                   var errorCapWidth = 0.25
                 }
 
-                function get_dataset1(result) {//add data to the graph dataset when you click on the button
+                function get_dataset1(result) { //add data to the graph dataset when you click on the button
                   graphData[leng] = { //info
                     label: (cellKey + " " + type),
                     fill: false,
@@ -485,7 +518,7 @@ function makeTable(contain) {
                     yAxisID: axisID
                   };
                 }
-                if (table['resultType'].includes('Binding')) {//making sure to get the right dataset
+                if (table['resultType'].includes('Binding')) { //making sure to get the right dataset
                   get_dataset1('value')
                 } else if (table['resultType'].includes('Distance')) {
                   get_dataset1('distance')
@@ -506,7 +539,7 @@ function makeTable(contain) {
                 if (location == -1) { //adds if not in graphData
                   addGraph();
                 } else {
-                  graphData.splice(location,1); //splice cuts out the data from the dataset
+                  graphData.splice(location, 1); //splice cuts out the data from the dataset
                   delete color_array[key + String(graphData.length)]
                   td.style.background = sprintf('rgb(230,230,210)');
                 }
@@ -529,12 +562,12 @@ function makeTable(contain) {
       //adds gradient
       if (!keyLabelled && chartType != "Graph") {
         function makeGradient(startColor, stopColor, xCoord, grdLabelStart, grdLabelStop) {
-          var td = document.createElement('td');//new cell for the gradient
+          var td = document.createElement('td'); //new cell for the gradient
           td.rowSpan = metalsHoriz.length + 1;
           td.style.border = "none";
           td.width = "100px"
           tr.appendChild(td);
-          var gradient = document.createElement('canvas');//canvas is a graphics element
+          var gradient = document.createElement('canvas'); //canvas is a graphics element
           gradient.id = "gradient" + titleSplit + String(xCoord);
           gradient.height = 250;
           gradient.width = 50;
@@ -551,7 +584,7 @@ function makeTable(contain) {
           ctx.fillRect(0, 20, c.width, 205);
           keyLabelled = true;
         }
-        if (title.includes("Distance")) {//making the various gradients for different tables
+        if (title.includes("Distance")) { //making the various gradients for different tables
           makeGradient("#005B00", "#00F700", 0, "Top <1.0 Ang", " >1.5 Ang")
           makeGradient("#633253", "#6332D0", 10, "Bridge <0.4 Ang", " >1.0 Ang")
           makeGradient("#FF3900", "#FFB700", 20, "Hollow <0.05 Ang", " >0.4 Ang")
@@ -576,7 +609,7 @@ function makeTable(contain) {
       //td.style.fontFamily = 'lucida console'
       tr.appendChild(td);
     });
-    var tr = document.createElement('tr');//buffer space so that the labels don't all get meshed together
+    var tr = document.createElement('tr'); //buffer space so that the labels don't all get meshed together
     tableElement.appendChild(tr);
     var td = document.createElement('td');
     tr.appendChild(td);
@@ -588,7 +621,7 @@ function makeTable(contain) {
     td.style.border = 'none';
   });
 
-  function hideAllTables() {//all tables are hidden on the page so we can select which to choose at any point
+  function hideAllTables() { //all tables are hidden on the page so we can select which to choose at any point
     _.each(tableContainers, function(div) {
       div.style.display = 'none';
     });
@@ -624,17 +657,17 @@ function makeTable(contain) {
     var ideals = 0;
 
     //so that the ideal BE lines don't disappear when the graph is cleared
-    try{
-      for(i = 0; i < 2; i++){
-        if(graphData[i]['label'] == 'Ideal HBE' || graphData[i]['label'] == 'Ideal OBE'){
+    try {
+      for (i = 0; i < 2; i++) {
+        if (graphData[i]['label'] == 'Ideal HBE' || graphData[i]['label'] == 'Ideal OBE') {
           ideals += 1;
         }
       }
     } catch {} //if the dataset is empty AKA no lines on the graph, do nothing
 
     graphData.splice(ideals, graphData.length); //remove all data currently on the graph
-    color_array = {};//empty out color record
-    window.myLine.update();//have graph reflect the above changes
+    color_array = {}; //empty out color record
+    window.myLine.update(); //have graph reflect the above changes
     var allGray = document.getElementsByClassName('clickTrue'); //gets all table elements and clears
     var leng = allGray.length;
     //turns all of the boxes gray; allGray is dynamic and will change as they turn to clickFalse
@@ -644,44 +677,66 @@ function makeTable(contain) {
     }
   }
 
-  OBE.onclick = function() {//adding and removing the OBE line
+  OBE.onclick = function() { //adding and removing the OBE line
     try {
-      if(graphData[0]['label'] != 'Ideal OBE') {
-        graphData.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'});
-      }
-      else {
+      if (graphData[0]['label'] != 'Ideal OBE') {
+        graphData.splice(0, 0, {
+          label: 'Ideal OBE',
+          fill: false,
+          data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE],
+          type: 'lineError',
+          yAxisID: 'BE'
+        });
+      } else {
         graphData.splice(0, 1);
       }
     } catch {
-      graphData.splice(0, 0, {label: 'Ideal OBE', fill: false, data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE], type: 'lineError', yAxisID: 'BE'});
+      graphData.splice(0, 0, {
+        label: 'Ideal OBE',
+        fill: false,
+        data: [IDEAL_OBE, IDEAL_OBE, IDEAL_OBE, IDEAL_OBE],
+        type: 'lineError',
+        yAxisID: 'BE'
+      });
     }
     window.myLine.update();
   }
 
-  HBE.onclick = function() {//adding and removing the Ideal HBE line
+  HBE.onclick = function() { //adding and removing the Ideal HBE line
     //0 for false, 1 for true; also applies to positioning in collection
     var dataExists = 0;
 
     //try used to catch index error
     try {
       var position;
-      if(graphData[0]['label'] == 'Ideal HBE'){
+      if (graphData[0]['label'] == 'Ideal HBE') {
         position = 0;
-      }
-      else if(graphData[0]['label'] == 'Ideal OBE'){
+      } else if (graphData[0]['label'] == 'Ideal OBE') {
         dataExists = 1;
         position = 1;
       }
       //splice adds into the array at the given position
-      if(graphData[position]['label'] != 'Ideal HBE') {
-        graphData.splice(1, 0, {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'});
+      if (graphData[position]['label'] != 'Ideal HBE') {
+        graphData.splice(1, 0, {
+          label: 'Ideal HBE',
+          fill: false,
+          data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE],
+          type: 'lineError',
+          yAxisID: 'BE'
+        });
       }
       //splice cuts 1 item at given position in this case
       else {
         graphData.splice(position, 1);
       }
-    } catch {//if graphData is empty, add
-      graphData.splice(dataExists, 0, {label: 'Ideal HBE', fill: false, data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE], type: 'lineError', yAxisID: 'BE'});
+    } catch { //if graphData is empty, add
+      graphData.splice(dataExists, 0, {
+        label: 'Ideal HBE',
+        fill: false,
+        data: [IDEAL_HBE, IDEAL_HBE, IDEAL_HBE, IDEAL_HBE],
+        type: 'lineError',
+        yAxisID: 'BE'
+      });
     }
 
     window.myLine.update();
@@ -697,17 +752,16 @@ function makeTable(contain) {
     });
   }
 
-  document.getElementById('menubtn').addEventListener('click',  function() {
-      document.getElementById("sidenav").style.width = "250px";
+  document.getElementById('menubtn').addEventListener('click', function() {
+    document.getElementById("sidenav").style.width = "250px";
   });
 
-  document.getElementById('closebtn').addEventListener('click', function () {
-      document.getElementById("sidenav").style.width = "0";
+  document.getElementById('closebtn').addEventListener('click', function() {
+    document.getElementById("sidenav").style.width = "0";
   });
 }
 
 makeTable('container') //'container' id is of the HTML element container
-
 </script>
 
 </html>
