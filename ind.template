@@ -125,7 +125,7 @@ function fillTables(contain) {
       tables[tableTitleBE]['cells'][cellKey]['value'] = bindingEnergy;
       tables[tableTitleDist]['cells'][cellKey]['value'] = dist;//distance value for each cell
       tables[tableTitleBE]['cells'][cellKey]['metadata'] = value['metadata'];
-      tables[tableTitleBE]['cells'][cellKey]['predicted_BE'] = parseFloat(value['predicted_BE']) || null;
+      tables[tableTitleBE]['cells'][cellKey]['predicted_BE'] = parseFloat(value['predicted_BE']) || "N/A";
       tables[tableTitleBE]['cells'][cellKey]['deform'] = deformed;
       tables[tableTitleDist]['cells'][cellKey]['metadata'] = 'Distance Moved: ' + String(dist);
       tables[tableTitleDist]['cells'][cellKey]['Neighbors'] = parseInt(value['Neighbors']);
@@ -224,20 +224,9 @@ function makeTable(contain) {
     makeNewDropdown(structure, dropdownLayers);
   });
 
-  var clearGraph = document.createElement('button'); //makes clear button
-  clearGraph.textContent = "clear";
-  clearGraph.className = "btn btn-default";
-  container.appendChild(clearGraph);
-
-  var OBE = document.createElement('button');//ideal OBE
-  OBE.textContent = "ideal OBE";
-  OBE.className = "btn btn-default";
-  container.appendChild(OBE);
-
-  var HBE = document.createElement('button');//ideal OBE
-  HBE.textContent = "ideal HBE";
-  HBE.className = "btn btn-default";
-  container.appendChild(HBE);
+  var clearGraph = document.getElementById('clear');
+  var OBE = document.getElementById('OBE')
+  var HBE = document.getElementById('HBE')
 
   tableContainers = {};
   var ctx = document.getElementById("myChart").getContext('2d');
@@ -597,6 +586,7 @@ function makeTable(contain) {
   hideAllTables();
   $(".container").hide();
   $(".navigation").hide();
+
 
   //function showTable
   showTable = title => tableContainers[title].style.display = "block";

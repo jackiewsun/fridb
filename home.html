@@ -7,17 +7,16 @@
 <div id = "menu">
   <button id = 'menubtn'> Menu </button>
 </div>
-<div id="dropup">
-  <button id="dropbtn">Instructions</button>
-  <div id="dropup-content">
-    <p>Use the dropdown menu to navigate to the desired combination of the following fields: Structure Type, Binding Site Composition, Adsorbate, and Result Type.</p>
-    <p>The 'Graph' option in binding site composition allows simultaneous graphing of binding energies and/or adsorbate movement distances at all binding site compositions for any alloy. Just click on the square corresponding to an alloy/alloys of interest!</p>
-  </div>
-</div>
-<br>
+
 <div class='container btn-group' id='container'>
   <canvas class = "absolute" id="myChart" width="150px" height="100px"></canvas><!--The canvas element for the graph-->
 </div>
+<div id='btn-grp'>
+  <button id = 'clear' class='btn-grp'>clear</button>
+  <button id = 'OBE' class='btn-grp'>ideal OBE</button>
+  <button id = 'HBE' class='btn-grp'>ideal HBE</button>
+</div>
+
 <!--Side Navigation Bar-->
 <div class = 'sidenav' id = 'sidenav'>
   <a href = "javascript:void(0)" class = "closebtn" id = 'closebtn'>&times;</a>
