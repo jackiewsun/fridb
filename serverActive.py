@@ -29,7 +29,7 @@ def saveResult(result):
     data = json.load(open('allresults_new.json', 'r'))
     data[key] = result
     json.dump(data, open('allresults_new.json', 'w'))
-
+    
 
 @b.post('/insert')
 def insert():
@@ -57,7 +57,7 @@ def insert():
     os.system('rm %s' % path2)
     # Get the metadata
     lines = open(os.path.join(path1, 'metadata.txt'), 'r').readlines()
-    metadata = dict ( username = lines[0].strip(),
+    metadata = dict ( username = lines[0].strip(), 
                       hostname = lines[1].strip(),
                       pwd = lines[2].strip(),
                       timestamp = lines[3].strip() )
@@ -75,16 +75,10 @@ def insert():
 
 @b.get('/')
 def index():
-    with open('ind.template', 'r') as f:
-        template = SimpleTemplate('\n'.join(f.readlines()))
-    with open('allresults_new.json', 'r') as f:
-        data = ''.join(f.readlines())
-    with open('home.html', 'r') as f:
-        text = ''.join(f.readlines())
-    with open('graphing.html', 'r') as f:
-        config = ''.join(f.readlines())
-    return template.render(text = text, data = data, config = config)
-
+    template = b.SimpleTemplate('\n'.join(open('ind.template2', 'r').readlines()))
+    data = ''.join(open('allresults_new.json', 'r').readlines())
+    return template.render(data = data)
+    
 
 @b.post('/checkcode')
 def check_code():
@@ -99,15 +93,15 @@ def check_user():
     username = b.request.forms.get('username')
     if checkUser(username):
         return 'true'
-    return 'false'
+    return 'false'  
 
 @b.route('/static/<filename>')
 def server_static(filename):
     return b.static_file(filename, root='./static')
-
+    
 if __name__ == "__main__":
     parser = optparse.OptionParser()
-    parser.add_option('-d', '--debug', dest='debug', action='store_true',
+    parser.add_option('-d', '--debug', dest='debug', action='store_true', 
                       default=False, help='Run server on localhost.')
     (options, arguments) = parser.parse_args()
     if not os.path.isdir('database'):
@@ -120,4 +114,6 @@ if __name__ == "__main__":
         print 'Debug ON'
         b.run(reloader=True)
     else:
-        b.run(server='localhost', port=8080)
+        b.run(server='cgi')
+
+     
