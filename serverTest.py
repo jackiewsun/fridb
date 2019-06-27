@@ -6,7 +6,7 @@ def index():
         template = SimpleTemplate('\n'.join(f.readlines()))
     with open('allresults_new.json', 'r') as f:
         data = ''.join(f.readlines())
-    with open('home.html', 'r') as f:
+    with open('text.html', 'r') as f:
         text = ''.join(f.readlines())
     with open('graphing.html', 'r') as f:
         config = ''.join(f.readlines())

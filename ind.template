@@ -2,6 +2,8 @@
 <html>
 <head>
   <title>Random Bimetallic Database</title>
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <link rel="icon" href="images/favicon.ico">
   <!--functionality and style scripts-->
   <script src='static/jquery.min.js'></script>
   <script src='static/underscore-min.js'></script>
@@ -15,7 +17,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<!--what actually shows up on the webpage. imported from home.html-->
+<!--what text actually shows up on the webpage. imported from home.html-->
 <body>
   {{!text}}
 </body>
@@ -217,7 +219,7 @@ function makeTable(contain) {
   var ids = ["79_NP", "Slab"];//helps with generating the dropdowns
   var siteAs = ['AAA', 'AAB', 'ABB', 'BBB', 'Graph'];
   var adsorbate = ["O", "H"];
-  var resultType = ["Binding_Energy", "Distance_Moved"];
+  var resultType = ["Binding_Energy", "Distance_Moved"]; 
   var dropdownLayers = [siteAs, adsorbate, resultType];
   _.each(ids, function(structureTypeDropdown) {//loop to create dropdowns
     var structure = document.getElementById(structureTypeDropdown);

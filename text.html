@@ -1,65 +1,141 @@
-<header id = "main-header">
-  <!--<img src = "/home/gce258/Summer_2017_Research/dbstuff/virtual_chem_logo.png" style = "float:left" height="80px">
-  <img src = "/home/gce258/Summer_2017_Research/dbstuff/virtual_chem_logo.png" style = "float:right" height="80px">-->
+<!--Header, container, buttons-->
+<header id="main-header">
   <h1>The Random Bimetallic Database</h1>
 </header>
 <br>
-<div id = "menu">
-  <button id = 'menubtn'> Menu </button>
+<div id="menu">
+  <button id='menubtn'> Menu </button>
 </div>
 
 <div class='container btn-group' id='container'>
-  <canvas class = "absolute" id="myChart" width="150px" height="100px"></canvas><!--The canvas element for the graph-->
+  <canvas class="absolute" id="myChart" width="150px" height="100px"></canvas>
+  <!--The canvas element for the graph-->
 </div>
 <div id='btn-grp'>
-  <button id = 'clear' class='btn-grp'>clear</button>
-  <button id = 'OBE' class='btn-grp'>ideal OBE</button>
-  <button id = 'HBE' class='btn-grp'>ideal HBE</button>
+  <button id='clear' class='btn-grp'>clear</button>
+  <button id='OBE' class='btn-grp'>ideal OBE</button>
+  <button id='HBE' class='btn-grp'>ideal HBE</button>
 </div>
 
 <!--Side Navigation Bar-->
-<div class = 'sidenav' id = 'sidenav'>
-  <a href = "javascript:void(0)" class = "closebtn" id = 'closebtn'>&times;</a>
-  <a href = '#' id = "background-info">Background Info</a>
-  <a href = '#' id = "navigation">Navigation</a>
-  <button class = 'dropdown-btn'>79 NP
-    <i class = "fa fa-caret-down"></i>
+<div class='sidenav' id='sidenav'>
+  <a href="javascript:void(0)" class="closebtn" id='closebtn'>&times;</a>
+  <a href='#' id="navigation">Navigation</a>
+  <a href='#' id="background-info">Background Info</a>
+  <button class='dropdown-btn'>79 NP
+    <i class="fa fa-caret-down"></i>
   </button>
-  <div class = 'dropdown-container' id = '79_NP'>
+  <div class='dropdown-container' id='79_NP'>
   </div>
-  <button class = 'dropdown-btn'>Slab
-    <i class = "fa fa-caret-down"></i>
+  <button class='dropdown-btn'>Slab
+    <i class="fa fa-caret-down"></i>
   </button>
-  <div class = 'dropdown-container' id = 'Slab'>
+  <div class='dropdown-container' id='Slab'>
   </div>
 </div>
+
 <!-------------------navigation text--------------------------->
-<p class = 'navigation'>
-  NOTE: JavaScript functionality is disabled on Microsoft Edge. Please switch to Google Chrome, Mozilla Firefox, or any other browser that supports JavaScript in order to view the rest of the database.
+<h1 class = 'navigation'>
+  Navigation Instructions
+</h1>
+<p class='navigation'>
+  Use the dropdown menu to navigate to the desired combination of the following fields: Structure Type, Binding Site Composition, Adsorbate, and Result Type.<br>
+  <img src = "images/navBar.png" alt = "">
 </p>
+
+<h2 class = 'navigation'>
+  Structure Type
+</h2>
 <p class = 'navigation'>
-  Use the dropdown menu to navigate to the desired combination of the following fields: Structure Type, Binding Site Composition, Adsorbate, and Result Type.
+  The two structure types explored for the catalyst are reflected here: a 79-atom nanoparticle (79 NP) and the bulk material (Slab).
 </p>
+
+<h2 class = 'navigation'>
+  Adsorbate
+</h2>
 <p class = 'navigation'>
-  The 'Graph' option in binding site composition allows simultaneous graphing of binding energies and/or adsorbate movement distances at all binding site compositions for any alloy. Just click on the square corresponding to an alloy/alloys of interest!
+  The two adsorbates explored for the fuel cell are reflected here: oxygen (O) for ORR and hydrogen (H) for HER.
 </p>
 
 
+<h2 class='navigation'>
+  Binding Site Composition
+</h2>
+<h3 class='navigation'>
+  AAA/BBB and AAB/ABB
+</h3>
+<p class='navigation'>
+  The tables are set up so that the primary metal (A) is on the x-axis and the secondary metal (B) is on the y-axis. The 3-atom hollow binding site composition can then be read
+  as a concatenation of the respective metals (e.g. AAB would be 2 of metal A, 1 of metal B).
+</p>
+<h4 class = 'navigation'>
+  Result Type
+</h4>
+<h5 class='navigation'>
+  Catalytic Activity
+</h5>
+<p class = 'navigation'>
+  The table reflects the catalytic activity for each site based on the volcano plots listed in the background info page, with a gradient key listed on the right. The green cells indicate
+  overbinding, while the yellow indicates underbinding. A darker color indicates a more ideal activity level. <br>
+  A tooltip appears when a cell is hovered over, displaying various information such as the observed and predicted binding energies in eV, the original binding site and alloy, and standard
+  deviation of the observed binding energy.
+</p>
+<h5 class='navigation'>
+  Distance Moved
+</h5>
+<p class = 'navigation'>
+  This data is used to display the average distance an adsorbate moved from its initial position in the 3-atom hollow site and if it moved to a bridge, top, or another hollow site. The color
+  represents the mode of the site movements. <br>
+  For example, on the 79 NP AAB/ABB H Distance Moved table, the green AgPt indicates that a majority of the 5 runs optimized to the top site. Hovering over the square provides more information:
+  the Pt top site was preferred 4 times, while the AgPt bridge site was preferred the other time. Thus, it can be reasonable to assume that the AgAgPt hollow site is unstable/less stable than
+  the surrounding sites.
+</p>
 
+<h3 class='navigation'>
+  Graph
+</h3>
+<p class = 'navigation'>
+  There is a dynamic graph located at the bottom of the webpage. By default, an ideal oxygen binding energy (OBE) line and ideal hydrogen binding energy (HBE) line are displayed.
+  These are able to be added/removed by clicking the respective cell on the top right. The clear button will clear everything but the ideal lines on the graph. <br>
+  When the graph result type is selected, a table of gray cells appears. These cells are able to be selected and unselected for both the binding energy and distance moved result
+  types, which will also add data to the graph.
+</p>
+<h4 class = 'navigation'>
+  Result Type
+</h4>
+<h5 class='navigation'>
+  Binding Energy
+</h5>
+<p class = 'navigation'>
+  Selecting a cell displays a line graph representing the respective average binding energies for each possible hollow site combination. The linearity of the graph reflects the
+  tunability of the material. Upon hovering over, each data point displays the binding energy, accurate to 4 decimal points.
+</p>
+<h5 class='navigation'>
+  Distance Moved
+</h5>
+<p class = 'navigation'>
+  Selecting a cell displays a bar graph representing the average adsorbate distance moved at each possible hollow site combination. This option is complementary to the binding
+  energy graph. If, when analyzing tunability, an anomaly is observed, the distance moved graph can indicate whether the adsorbate moved sites or not.
+</p>
+
+<p class='navigation'>
+  <br><br>
+  NOTE: This webpage is currently incompatible with Microsoft Edge. Please switch to Google Chrome, Mozilla Firefox, or any other browser that supports JavaScript in order to view the rest of the database.
+</p>
 <!------------------------------------------------------------>
 
 <!-------------------background info text (this is the home page for now)---------------------->
-<p class = 'background-info'>
+<p class='background-info'>
   It is essential to promote alternative energy sources as our energy demands to increase. Our research aims to improve the viability of hydrogen
-	fuel cells via high-throughput computation of materials candidates for catalysis. We performed density functional theory calculations to optimize randomly-ordered
-	bimetallic 79-atom nanoparticles and slabs. We use the well-defined relation between binding energy of metallic materials to oxygen and hydrogen to their catalytic ability
-	for the oxygen reduction and hydrogen evolution reactions. From there, we can make conclusions about promising catalytic materials from our calculated binding energies
-	reported here.
+  fuel cells via high-throughput computation of materials candidates for catalysis. We performed density functional theory calculations to optimize randomly-ordered
+  bimetallic 79-atom nanoparticles and slabs. We use the well-defined relation between binding energy of metallic materials to oxygen and hydrogen to their catalytic ability
+  for the oxygen reduction and hydrogen evolution reactions. From there, we can make conclusions about promising catalytic materials from our calculated binding energies
+  reported here.
 </p>
-<p class = 'background-info'>
+<p class='background-info'>
   Findings reported here also include the distance the adsorbate moved from the original three-fold hollow site, which when considered in the differences
-	between predicted and observed binding energies, can explain deviations from our predictions. A useful tool in this database is the 'Graph' functionality, which allows
-	plotting of binding energies and/or adsorbate movement distances across the four site compositions for a particular alloy. This can then be used, for example, to observe
-	whether one of our materials is tunable and, if not, what sites correlated to adsorbate movement.
+  between predicted and observed binding energies, can explain deviations from our predictions. A useful tool in this database is the 'Graph' functionality, which allows
+  plotting of binding energies and/or adsorbate movement distances across the four site compositions for a particular alloy. This can then be used, for example, to observe
+  whether one of our materials is tunable and, if not, what sites correlated to adsorbate movement.
 </p>
 <!------------------------------------------------------------>
