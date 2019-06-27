@@ -91,7 +91,7 @@ function fillTables(contain) {
     var m1 = split[1]; //first metal
     var siteA2, siteA = parseInt(split[2]); //# of the first metal. is none if it is a pure slab
     var m2 = split[3]; //second metal
-    var resultType = split[5] + ' Binding Energy'; //O or H binding energy
+    var resultType = split[5] + ' Catalytic Activity'; //O or H binding energy
     var dist = parseFloat(value['distance']); //returns
 
     //designating sites
@@ -219,7 +219,7 @@ function makeTable(contain) {
   var ids = ["79_NP", "Slab"];//helps with generating the dropdowns
   var siteAs = ['AAA', 'AAB', 'ABB', 'BBB', 'Graph'];
   var adsorbate = ["O", "H"];
-  var resultType = ["Binding_Energy", "Distance_Moved"]; 
+  var resultType = ["Catalytic_Activity", "Distance_Moved"];
   var dropdownLayers = [siteAs, adsorbate, resultType];
   _.each(ids, function(structureTypeDropdown) {//loop to create dropdowns
     var structure = document.getElementById(structureTypeDropdown);
@@ -252,7 +252,7 @@ function makeTable(contain) {
     tableContainer.appendChild(heading);
     title = title.includes('AAA') ? title.replace('AAA', 'AAA/BBB') : ((title.includes('AAB') ? title.replace('AAB', 'AAB/ABB') : title))
 
-    var titleChange = chartType == 'O' ? title.replace('Binding Energy', 'Activity') : title; // fixing O to activity
+    var titleChange = chartType == 'H' ? title.replace('Catalytic Activity', 'Binding Energy') : title; // fixing O to activity
     heading.textContent = titleChange;
     heading.style.fontSize = "xx-large"
     var tableElement = document.createElement('table');
@@ -293,7 +293,7 @@ function makeTable(contain) {
             td.style.background = sprintf('#000000')
             //												td.style.fontSize = "large"
             //												td.textContent = 'X'
-          } else if (table['resultType'] == "O Binding Energy") { //creates color gradient for O
+          } else if (table['resultType'] == "O Catalytic Activity") { //creates color gradient for O
             var targetEnergy = IDEAL_OBE;
               var ideal_activity = -0.134;
 
@@ -309,7 +309,7 @@ function makeTable(contain) {
                 td.style.background = sprintf('rgb(255,' + String(57 + Math.min(Math.floor(activityRatio * (183 - 57)), 183 - 57)) + ',0)')
               }
 
-          } else if (table['resultType'] == "H Binding Energy") { //creates color gradient for H
+          } else if (table['resultType'] == "H Catalytic Activity") { //creates color gradient for H
             var targetEnergy = IDEAL_HBE;
             var dif = Math.abs(targetEnergy - bindingEnergy);
             if (dif < 0.05) {
