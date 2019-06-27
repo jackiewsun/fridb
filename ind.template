@@ -517,16 +517,16 @@ function makeTable(contain) {
 
       //adds gradient
       if (!keyLabelled && chartType != "Graph") {
-        function makeGradient(startColor, stopColor, xCoord, grdLabelStart, grdLabelStop) {
+        function makeGradient(startColor, stopColor, xCoord, grdTitle, grdLabelStart, grdLabelStop) {
           var td = document.createElement('td');//new cell for the gradient
           td.rowSpan = metalsHoriz.length + 1;
           td.style.border = "none";
-          td.width = "100px"
+          td.width = "106px"
           tr.appendChild(td);
           var gradient = document.createElement('canvas');//canvas is a graphics element
           gradient.id = "gradient" + titleSplit + String(xCoord);
-          gradient.height = 250;
-          gradient.width = 50;
+          gradient.height = 260;
+          gradient.width = 55;
           td.append(gradient);
           var c = document.getElementById("gradient" + titleSplit + String(xCoord))
           var ctx = c.getContext("2d");
@@ -534,21 +534,22 @@ function makeTable(contain) {
           ctx.font = "10px Verdana"
           grd.addColorStop(0, startColor)
           grd.addColorStop(1, stopColor)
-          ctx.fillText(grdLabelStart, 0, 10)
-          ctx.fillText(grdLabelStop, 0, 240)
+          ctx.fillText(grdTitle, 0, 10)
+          ctx.fillText(grdLabelStart, 0, 22)
+          ctx.fillText(grdLabelStop, 0, 250)
           ctx.fillStyle = grd;
-          ctx.fillRect(0, 20, c.width, 205);
+          ctx.fillRect(0, 30, c.width, 205);
           keyLabelled = true;
         }
         if (title.includes("Distance")) {//making the various gradients for different tables
-          makeGradient("#005B00", "#00F700", 0, "Top <1.0 Ang", " >1.5 Ang")
-          makeGradient("#633253", "#6332D0", 10, "Bridge <0.4 Ang", " >1.0 Ang")
-          makeGradient("#FF3900", "#FFB700", 20, "Hollow <0.05 Ang", " >0.4 Ang")
+          makeGradient("#005B00", "#00F700", 0, "  Top Site", " <1.0 Ang", " >1.5 Ang")
+          makeGradient("#633253", "#6332D0", 10, "Bridge Site", " <0.4 Ang", " >1.0 Ang")
+          makeGradient("#FF3900", "#FFB700", 20, "Hollow Site", "<0.05 Ang", " >0.4 Ang")
         } else if (chartType == "O") {
-          makeGradient("#005B00", "#00F700", 0, "Over,ideal", "Non-ideal")
-          makeGradient("#FF3900", "#FFB700", 10, "Under,ideal", "Non-ideal")
+          makeGradient("#005B00", "#00F700", 0, "Over-bind", "    ideal", " Non-ideal")
+          makeGradient("#FF3900", "#FFB700", 10, "Under-bind", "    ideal", " Non-ideal")
         } else if (chartType == "H") {
-          makeGradient("#0036B0", "#BFCDEB", 0, "<0.05 eV", " >0.6 eV")
+          makeGradient("#0036B0", "#BFCDEB", 0, "|BE|", "<0.05 eV", ">0.6 eV")
         }
       }
     });
@@ -585,7 +586,7 @@ function makeTable(contain) {
 
   hideAllTables();
   $(".container").hide();
-  $(".navigation").hide();
+  $(".background-info").hide();
 
 
   //function showTable
