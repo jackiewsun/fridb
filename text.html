@@ -68,21 +68,21 @@
   The tables are set up so that the primary metal (A) is on the x-axis and the secondary metal (B) is on the y-axis. The 3-atom hollow binding site composition can then be read
   as a concatenation of the respective metals (e.g. AAB would be 2 of metal A, 1 of metal B).
 </p>
-<h4 class = 'navigation'>
-  Result Type
-</h4>
-<h5 class='navigation'>
+<h4 class='navigation'>
   Catalytic Activity
-</h5>
-<p class = 'navigation'>
+</h4>
+<p class='navigation'>
   The table reflects the catalytic activity for each site based on the volcano plots listed in the background info page, with a gradient key listed on the right. The green cells indicate
   overbinding, while the yellow indicates underbinding. A darker color indicates a more ideal activity level. <br>
+  <img src = "images/activity.png" alt = "">
   A tooltip appears when a cell is hovered over, displaying various information such as the observed and predicted binding energies in eV, the original binding site and alloy, and standard
   deviation of the observed binding energy.
+  <img src = "images/activityTooltip2.png" alt = "">
+
 </p>
-<h5 class='navigation'>
+<h4 class='navigation'>
   Distance Moved
-</h5>
+</h4>
 <p class = 'navigation'>
   This data is used to display the average distance an adsorbate moved from its initial position in the 3-atom hollow site and if it moved to a bridge, top, or another hollow site. The color
   represents the mode of the site movements. <br>
@@ -94,25 +94,22 @@
 <h3 class='navigation'>
   Graph
 </h3>
-<p class = 'navigation'>
+<p class='navigation'>
   There is a dynamic graph located at the bottom of the webpage. By default, an ideal oxygen binding energy (OBE) line and ideal hydrogen binding energy (HBE) line are displayed.
   These are able to be added/removed by clicking the respective cell on the top right. The clear button will clear everything but the ideal lines on the graph. <br>
   When the graph result type is selected, a table of gray cells appears. These cells are able to be selected and unselected for both the binding energy and distance moved result
   types, which will also add data to the graph.
 </p>
-<h4 class = 'navigation'>
-  Result Type
-</h4>
-<h5 class='navigation'>
+<h4 class='navigation'>
   Binding Energy
-</h5>
+</h4>
 <p class = 'navigation'>
   Selecting a cell displays a line graph representing the respective average binding energies for each possible hollow site combination. The linearity of the graph reflects the
   tunability of the material. Upon hovering over, each data point displays the binding energy, accurate to 4 decimal points.
 </p>
-<h5 class='navigation'>
+<h4 class='navigation'>
   Distance Moved
-</h5>
+</h4>
 <p class = 'navigation'>
   Selecting a cell displays a bar graph representing the average adsorbate distance moved at each possible hollow site combination. This option is complementary to the binding
   energy graph. If, when analyzing tunability, an anomaly is observed, the distance moved graph can indicate whether the adsorbate moved sites or not.
@@ -121,21 +118,27 @@
 <p class='navigation'>
   <br><br>
   NOTE: This webpage is currently incompatible with Microsoft Edge. Please switch to Google Chrome, Mozilla Firefox, or any other browser that supports JavaScript in order to view the rest of the database.
+  <br><br>
+  The code for the webpage can be found <a href="https://github.com/jackiewsun/fridb">here.</a>
 </p>
 <!------------------------------------------------------------>
 
 <!-------------------background info text (this is the home page for now)---------------------->
 <p class='background-info'>
-  It is essential to promote alternative energy sources as our energy demands to increase. Our research aims to improve the viability of hydrogen
-  fuel cells via high-throughput computation of materials candidates for catalysis. We performed density functional theory calculations to optimize randomly-ordered
-  bimetallic 79-atom nanoparticles and slabs. We use the well-defined relation between binding energy of metallic materials to oxygen and hydrogen to their catalytic ability
-  for the oxygen reduction and hydrogen evolution reactions. From there, we can make conclusions about promising catalytic materials from our calculated binding energies
-  reported here.
-</p>
-<p class='background-info'>
-  Findings reported here also include the distance the adsorbate moved from the original three-fold hollow site, which when considered in the differences
-  between predicted and observed binding energies, can explain deviations from our predictions. A useful tool in this database is the 'Graph' functionality, which allows
-  plotting of binding energies and/or adsorbate movement distances across the four site compositions for a particular alloy. This can then be used, for example, to observe
-  whether one of our materials is tunable and, if not, what sites correlated to adsorbate movement.
+  It is essential to promote alternative energy sources as our energy demands continue to increase. One such form of alternative energy is the hydrogen fuel cell, which converts hydrogen and oxygen gas into water and energy, but its viability is limited due to the expense of the necessary platinum catalyst ($847.77/oz, updated 7/18/19). Our research aims to replace platinum with a more economical catalyst via high-throughput computation and analysis of material candidates.
+  <br><br>
+  In the search for a suitable catalyst, binding energies, the energy released when the adsorbate attaches to the material, are explored. Oxygen is explored for the Oxygen Reduction Reaction (ORR) that occurs within the fuel cell to release energy and the Hydrogen Evolution Reaction (HER) that occurs outside the fuel cell to produce hydrogen gas from water. The equation used to calculate binding energy is displayed below.
+  <br><br>
+  <i>
+    Binding Energy = Energy<sub>Adsorbent + Adsorbate</sub> - Energy<sub>Adsorbent</sub> - &frac12; Energy<sub>Adsorbate</sub>
+  </i>
+  <br><br>
+  There is an established trend between binding energy and catalytic activity for both ORR and HER, as displayed in the figures below.  Evidently, platinum as a catalyst is near-ideal for both reactions. The idea in the bimetallic project is to combine two FCC metals in hopes of creating a more ideal or cheaper alternative. Eight FCC metals were selected for this project are Ni, Pd, Rh, Pt, Ir, Cu, Au, and Ag, allowing for 28 possible bimetallic combinations.
+  <br><br>
+  A computational approach was utilized due to the number of calculations that would be required. Two structures were analyzed in 50:50 compositions: 79-atom nanoparticles arranged in a face-centered cubic (FCC) truncated octahedron and four-layer FCC(111) slabs with the bottom two layers frozen. Five randomly generated structures of each type were generated to follow? the randomness of how these catalysts would be created for practical use. On each surface, four unique 3-atom hollow binding sites were explored with both oxygen and hydrogen adsorbates, as shown below. This results in 2240 calculations, not accounting for errors.
+  <img src='images/hollowSites.png' alt=''>
+  Surrounding each hollow site are a few other possible sites: the 2-atom bridge site and 1-atom top site. On occasion, the adsorbate favored these alternate sites or even a neighboring hollow site as opposed to the designated hollow site. Thus, the distance moved statistic is measured to determine which structures observed this adsorbate movement, indicating instability at the hollow site. The hollow site is explored specifically because the ensemble effect dictates that the surrounding composition of the site generally reflects the overall composition of a structure. So when the adsorbate optimizes to a different binding site, this effect cannot be analyzed properly and affects a property called tunability. If a material exhibits tunability, its binding energy scales linearly with its overall composition, so it is important to know whether or not altering the structure will generate the expected results.
+  <br><br>
+  Along with tunability as a factor for predicting binding energies, a binding energy prediction algorithm is under development. The idea is to be able to predict binding energies of other metal combinations not explored in the bimetallic project without having to undergo the lengthy calculation process.
 </p>
 <!------------------------------------------------------------>

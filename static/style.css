@@ -1,3 +1,10 @@
+/**********************************************************
+
+LOOK INTO FLEX CSS POSITIONING, POTENTIALLY MAKE 2 COLUMNS IN THE
+INSTRUCTIONS PART? IMAGES LOOK WEIRD BEING CENTERED: TOO MUCH WHITE SPACE
+
+***********************************************************/
+
 table {
     border-collapse: collapse;
     table-layout: fixed;
@@ -136,8 +143,8 @@ transform: rotate(-90deg);
 .sidenav .closebtn {
     position: absolute;
     top: 0;
-    font-size: 36px;
-    margin-left: 180px;
+    font-size: 40px;
+    margin-left: 187px;
 }
 
 @media screen and (max-height: 450px) {
