@@ -104,7 +104,7 @@ function fillTables(contain) {
     } else if (siteA === 2) {
       siteA2 = 'ABB';
       siteA = 'AAB';
-    } else { //also captures the pure case, an arbitrary assignment. siteA null
+    } else { //also captures the pure case, an arbitrary assignment. siteA === 'None'
       siteA2 = 'BBB';
       siteA = 'AAA';
     }
@@ -122,7 +122,6 @@ function fillTables(contain) {
       tables[tableTitleDist]['cells'][cellKey] = {};
       var deformed = (value['deform_RMS'] == null || value['deform_max'] == null) ? 'deformed' : deformed = parseFloat(value['deform_RMS']);
       var bindingEnergy = resultType in clamps ? Math.max(clamps[resultType]['min'], Math.min(parseFloat(value['result']), clamps[resultType]['max'])) : parseFloat(value['result']);
-      var stability = value['SiteA'] == null ? ['bare'] : value['stability'];
 
       //this entire chunk of code is inserting data into cells
       tables[tableTitleBE]['cells'][cellKey]['value'] = bindingEnergy;
@@ -130,11 +129,11 @@ function fillTables(contain) {
       tables[tableTitleBE]['cells'][cellKey]['metadata'] = value['metadata'];
       tables[tableTitleBE]['cells'][cellKey]['predicted_BE'] = parseFloat(value['predicted_BE']) || "N/A";
       tables[tableTitleBE]['cells'][cellKey]['deform'] = deformed;
-      tables[tableTitleBE]['cells'][cellKey]['stability'] = stability;
       tables[tableTitleDist]['cells'][cellKey]['metadata'] = 'Distance Moved: ' + String(dist);
       tables[tableTitleDist]['cells'][cellKey]['Neighbors'] = parseInt(value['Neighbors']);
       tables[tableTitleDist]['cells'][cellKey]['neighbor_identity'] = value['neighbor_identity'];
       tables[tableTitleDist]['cells'][cellKey]['deform'] = deformed;
+
 
       tables[tableTitleBE]['max'] = Math.max(bindingEnergy, tables[tableTitleBE]['max']);//identifies the maxes and mins of the table values
       tables[tableTitleBE]['min'] = Math.min(bindingEnergy, tables[tableTitleBE]['min']);//what do max and min really do? are they needed?
@@ -374,25 +373,7 @@ function makeTable(contain) {
             } else {//if it isn't deformed, add the data to the tooltip
               if (titleSplit.split('_').indexOf("Distance") == -1) {
                 div.title += 'Activity: ' + table['cells'][cellKey]['value'].toFixed(4) + '\n';
-                var bare = (table['cells'][cellKey]['predicted_BE'] == 'N/A');
-                if (!bare) {
-                  div.title += 'Predicted Binding Energy: ' + table['cells'][cellKey]['predicted_BE'] + '\n';
-                  var stableSites = table['cells'][cellKey]['stability'];
-                  //version: indicating how many unstable sites there are
-                  //div.title += '# Unstable Sites: ' + (5-stableSites.length) + '\n';
-
-                  //version: indicating which sites specifically are not being used
-                  var allSites = ['s1', 's2', 's3', 's4', 's5'];
-                  var unstableSites = _.difference(allSites, stableSites);
-                  if (unstableSites.length == 0) {
-                    unstableSites = 'None';
-                  }
-                  div.title += 'Unstable Sites: ' + unstableSites + '\n';
-
-                  /*working! Want to replace the stability array so that it displays which calculations are not used
-                  has to be an easier way to do this - logic is to used the array itself and change the name of each array,
-                  then figure out which values are not being used*/
-                }
+                div.title += 'Predicted Binding Energy: ' + table['cells'][cellKey]['predicted_BE'] + '\n';
               }
               div.title += table['cells'][cellKey]['metadata'].replace(/<br>/g, '\n');
             }
